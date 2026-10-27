@@ -86,7 +86,17 @@ signup.
    reference (the ecosystem's own host: Read the Docs, pkg.go.dev, javadoc.io,
    ...), and the OpenAPI spec in ensemble-weather-spec.
 9. **Supported versions:** the language/runtime versions CI tests.
-10. **Contributing, security, licence:** one line each, linking the files.
+10. **Contributing and community** (a real section, not a footnote), in this
+    spirit: "This SDK is open source and we want it to be the best weather SDK
+    in <Language>. Bug reports, feature requests, docs fixes and pull requests
+    are all welcome, including small ones." Then link:
+    - **Report a bug**: the bug issue form;
+    - **Request a feature** or an API capability: the feature form;
+    - **Ask a question or share what you built**: GitHub Discussions;
+    - **Contribute code or docs**: CONTRIBUTING.md and the `good first issue`
+      label;
+    - **Security issues**: never in public issues; see SECURITY.md.
+    Close with the licence line.
 
 Every link back to Ourea uses `https://oureawx.com` or
 `https://docs.oureawx.com`. Never `api.oureawx.com` as a page, and never a dev
@@ -146,6 +156,42 @@ Each ecosystem's standard tools, at their strictest common settings, fail CI:
 | R | styler (tidyverse) | lintr, `R CMD check --as-cran` with 0 errors/warnings/notes |
 | MATLAB | (none standard) | `checkcode`/Code Analyzer with zero issues, `matlab.unittest` |
 | Dart | `dart format` | `dart analyze --fatal-infos` with package:lints recommended + strict-casts/inference/raw-types |
+
+## Community and contributing
+
+Every repository (each SDK, the spec and the docs) makes it easy and welcome
+for outside developers to report problems, ask for things and contribute:
+
+- **CONTRIBUTING.md** opens warmly ("Thanks for helping make Ourea better")
+  and gets someone from clone to a passing local check in a few commands. It
+  explains what makes a good bug report (SDK version, runtime, a minimal
+  snippet, the request id from the error) and how feature ideas are decided.
+  It states that the API's behaviour lives in ensemble-weather-spec, so API
+  feature requests may be moved there. The dependency rule and the
+  `[INSERT CONTACT]` conduct contact stay as they are.
+- **Issue forms** (`.github/ISSUE_TEMPLATE/*.yml`, GitHub issue forms, not
+  free-text templates):
+  - `bug_report.yml`: SDK version, runtime/OS, what happened vs expected, a
+    minimal repro, and the `request_id` if there is one; it reminds people
+    never to paste an API key;
+  - `feature_request.yml`: the problem first, then the proposed API, and
+    whether it needs a server change;
+  - `docs.yml`: a wrong or unclear docs page or example.
+  - `config.yml` sets `blank_issues_enabled: false` and adds contact links:
+    Discussions (questions and show-and-tell), the docs site, and security
+    reporting.
+- **GitHub Discussions** is enabled with the categories Q&A, Ideas, and Show
+  and tell. Questions go to Q&A, not issues.
+- **Labels:** `bug`, `enhancement`, `documentation`, `good first issue`,
+  `help wanted`, `question`, `needs-spec` (needs an API or spec change). Each
+  repo seeds a few real `good first issue`s at release, such as an example
+  for a task not covered yet.
+- **The PR template** asks for: what and why, the linked issue, tests added,
+  and the checks run locally. It thanks the contributor.
+- **Responsiveness:** CONTRIBUTING commits to a first response on new issues
+  and PRs within a few business days, and keeps that promise modest and true.
+- **Recognition:** CHANGELOG entries credit outside contributors by GitHub
+  handle.
 
 ## Dependencies
 
