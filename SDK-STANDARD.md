@@ -16,6 +16,10 @@ language's idiom (epic KAN-1049; per-language conventions below).
 | Java | `ensemble-weather-java` | Maven `com.oureawx:ensemble-weather`, module `com.oureawx.ensembleweather` | Maven / Gradle coordinates |
 | Kotlin | `ensemble-weather-kotlin` | Maven `com.oureawx:ensemble-weather-kotlin`, package `com.oureawx.ensembleweather.kotlin` | Gradle coordinates |
 | Swift | `ensemble-weather-swift` | SwiftPM product `EnsembleWeather` | `.package(url: "https://github.com/Ourea-Technologies/ensemble-weather-swift", from: "0.1.0")` |
+| Rust | `ensemble-weather-rust` | crates.io `ensemble-weather`, crate `ensemble_weather` | `cargo add ensemble-weather` |
+| R | `ensemble-weather-r` | CRAN `ensembleweather` | `install.packages("ensembleweather")` |
+| MATLAB | `ensemble-weather-matlab` | File Exchange "Ourea Ensemble Weather", namespace `+ensembleweather`, `.mltbx` | Add-On Explorer / `matlab.addons.install` |
+| Dart | `ensemble-weather-dart` | pub.dev `ensemble_weather` (verified publisher oureawx.com) | `dart pub add ensemble_weather` |
 
 The registry description of every package contains **"Ourea"** and its keywords
 include `ourea`, `weather`, `forecast`, `ensemble` and `probabilistic`, so brand
@@ -138,6 +142,10 @@ Each ecosystem's standard tools, at their strictest common settings, fail CI:
 | Java | google-java-format | Error Prone + NullAway, `-Xlint:all -Werror` |
 | Kotlin | ktlint | detekt, explicit API mode |
 | Swift | swift-format | swift-format lint `--strict`, Swift 6 strict concurrency |
+| Rust | rustfmt | clippy `-D warnings` with `clippy::pedantic` (documented allows) |
+| R | styler (tidyverse) | lintr, `R CMD check --as-cran` with 0 errors/warnings/notes |
+| MATLAB | (none standard) | `checkcode`/Code Analyzer with zero issues, `matlab.unittest` |
+| Dart | `dart format` | `dart analyze --fatal-infos` with package:lints recommended + strict-casts/inference/raw-types |
 
 ## Dependencies
 
@@ -172,6 +180,10 @@ Each SDK repository runs `security.yml` on every push, every PR, and weekly:
 | Java | osv-scanner on the resolved dependency tree | Error Prone + SpotBugs with Find Security Bugs |
 | Kotlin | osv-scanner on the Gradle lockfile | detekt (incl. potential-bugs) + SpotBugs/Find Security Bugs on the JVM bytecode |
 | Swift | osv-scanner on Package.resolved | swift-format lint plus a grep gate: no force unwraps (`!`) or `try!` outside tests |
+| Rust | cargo-audit + cargo-deny (advisories, licences, bans) | clippy, plus `#![forbid(unsafe_code)]` |
+| R | osv-scanner on the renv lockfile / `oysteR` | lintr's security-relevant linters, and no `eval(parse())` |
+| MATLAB | (no package ecosystem: there are no runtime deps) | Code Analyzer, plus a grep gate: no `eval`/`evalin` |
+| Dart | osv-scanner on pubspec.lock | `dart analyze` with `avoid_dynamic_calls` |
 
 All SDKs also run:
 
