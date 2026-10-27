@@ -34,7 +34,9 @@ CODE_OF_CONDUCT.md   Contributor Covenant 2.1
   workflows/ci.yml        lint + type check + unit + vectors + examples (every push, PR)
   workflows/live.yml      nightly contract run against the live API (read-only key)
   workflows/release.yml   tag v*.*.* -> build, publish, GitHub release
-  workflows/codeql.yml    where CodeQL supports the language
+  workflows/security.yml  dependency audit, static security lint, workflow audit (see "Security")
+  workflows/codeql.yml    CodeQL (every SDK language is supported)
+  workflows/scorecard.yml OpenSSF Scorecard, weekly + on main
   dependabot.yml          the package ecosystem + github-actions, weekly
   ISSUE_TEMPLATE/         bug report, feature request; config.yml links the docs
   pull_request_template.md
@@ -51,8 +53,12 @@ successful call in **under 60 seconds** from the top of the README, with no
 signup.
 
 1. **Title + one line:** "Official <Language> SDK for the [Ourea](https://oureawx.com)
-   probabilistic weather API." Badges: registry version, CI status, licence,
-   docs.
+   probabilistic weather API." Then one row of badges, in this order:
+   CI (`ci.yml` status on `main`), security (`security.yml` status on `main`),
+   registry version, supported runtime versions where the ecosystem has a
+   badge for them, licence (BSD-2-Clause), docs, and the OpenSSF Scorecard.
+   Use shields.io or GitHub's own workflow badge URLs, linking each badge to
+   its source (the workflow runs, the registry page, the docs).
 2. **Install:** one command.
 3. **Quickstart:** ONE copy-paste program, the same task in every language:
    an anonymous forecast for a named location (`or/mt-hood-meadows`), printing
@@ -132,6 +138,66 @@ Each ecosystem's standard tools, at their strictest common settings, fail CI:
 | Java | google-java-format | Error Prone + NullAway, `-Xlint:all -Werror` |
 | Kotlin | ktlint | detekt, explicit API mode |
 | Swift | swift-format | swift-format lint `--strict`, Swift 6 strict concurrency |
+
+## Dependencies
+
+As few as possible. Every runtime dependency is a supply-chain risk and an
+install-friction cost.
+
+- **Runtime:** the standard library HTTP client and JSON wherever the
+  language has a good one (TypeScript fetch, Go net/http, .NET HttpClient +
+  System.Text.Json, Java java.net.http, Swift URLSession). Python uses httpx
+  (the one allowed runtime dependency; it gives sync + async with one API).
+  Kotlin may use kotlinx-coroutines and kotlinx-serialization. Anything else
+  needs a written justification in CONTRIBUTING.md and Harrison's approval.
+- **Optional integrations** (pandas, xarray, DI containers) are extras or
+  separate packages, never imported by the core.
+- **Dev dependencies** are pinned through a lockfile (uv.lock,
+  package-lock.json, go.sum, packages.lock.json, Gradle lockfile/version
+  catalog, Package.resolved).
+- CI fails if a new runtime dependency appears without its justification
+  line in CONTRIBUTING.md (a small script that compares the manifest with
+  the list).
+
+## Security
+
+Each SDK repository runs `security.yml` on every push, every PR, and weekly:
+
+| Language | Dependency audit | Static security lint |
+|---|---|---|
+| Python | pip-audit (against uv.lock) | ruff `S` (bandit rules) |
+| TypeScript | `npm audit --audit-level=low --omit=dev` + osv-scanner | eslint-plugin-security, with no `eval`/`Function` |
+| Go | govulncheck | gosec (through golangci-lint) |
+| C# | `dotnet list package --vulnerable --include-transitive` (fails on any) | .NET security analyzers (CA2xxx/CA3xxx/CA5xxx as errors) |
+| Java | osv-scanner on the resolved dependency tree | Error Prone + SpotBugs with Find Security Bugs |
+| Kotlin | osv-scanner on the Gradle lockfile | detekt (incl. potential-bugs) + SpotBugs/Find Security Bugs on the JVM bytecode |
+| Swift | osv-scanner on Package.resolved | swift-format lint plus a grep gate: no force unwraps (`!`) or `try!` outside tests |
+
+All SDKs also run:
+
+- **CodeQL** (`codeql.yml`) with the `security-extended` query suite;
+- **zizmor** on `.github/workflows/` (workflow injection, over-broad
+  permissions, unpinned actions);
+- **Dependency Review** (`actions/dependency-review-action`) on PRs, failing
+  on any vulnerable or non-permissively licensed new dependency;
+- **OpenSSF Scorecard** (`scorecard.yml`), published, with its badge in the
+  README.
+
+On GitHub (repo settings): secret scanning and push protection, Dependabot
+alerts and security updates, private vulnerability reporting.
+
+These SDK behaviours are tested by the shared vectors and by each SDK's own
+tests:
+
+- the API key never appears in logs, errors, `repr`/`toString`, or
+  exception messages;
+- the key is never sent to another host on a redirect;
+- TLS verification is never disabled by default, and there is no option to
+  disable it;
+- response bodies are size-bounded (a body over 64 MiB is an error, not an
+  out-of-memory);
+- JSON parsing never evaluates code and never deserialises to arbitrary
+  types (no polymorphic deserialisation).
 
 ## CI
 
