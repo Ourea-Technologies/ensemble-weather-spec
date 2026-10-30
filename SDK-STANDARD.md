@@ -21,6 +21,14 @@ language's idiom (epic KAN-1049; per-language conventions below).
 | MATLAB | `ensemble-weather-matlab` | File Exchange "Ourea Ensemble Weather", namespace `+ensembleweather`, `.mltbx` | Add-On Explorer / `matlab.addons.install` |
 | Dart | `ensemble-weather-dart` | pub.dev `ensemble_weather` (verified publisher oureawx.com) | `dart pub add ensemble_weather` |
 
+The four coordinate operations have fixed method names, in each language's
+case (Harrison, 2026-10-30; no aliases): `getPointForecast` →
+`getPointForecast`, `getCurrentByCoordinates` → `getPointCurrent`,
+`getAlertsByCoordinates` → `getPointAlerts`, `getNearbyByCoordinates` →
+`getPointNearby` (so Python/Rust `get_point_forecast`, Go `GetPointForecast`,
+.NET `GetPointForecastAsync`, R `ew_get_point_forecast()`, and likewise for
+the other three).
+
 The registry description of every package contains **"Ourea"** and its keywords
 include `ourea`, `weather`, `forecast`, `ensemble` and `probabilistic`, so brand
 searches find it.
