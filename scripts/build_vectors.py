@@ -2280,7 +2280,7 @@ CASES: list[dict] = [
         "responses": [ok("current-pass.json")],
         "expect": {
             "result": {
-                "current.measured": CURRENT_PASS["current"]["measured"],
+                "now.measured": CURRENT_PASS["current"]["measured"],
                 "pass.chances.window_hours": 24,
                 "pass.chances.p_snow_ge_1in.threshold": 25.4,
                 "pass.chances.p_snow_ge_1in.members": 164,
