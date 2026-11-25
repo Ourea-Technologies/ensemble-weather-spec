@@ -1052,7 +1052,7 @@ CASES: list[dict] = [
                 # The member variables a Pro key's plume carries: the full set.
                 "members_view": FORECAST_PLUME["members_view"],
                 "location.elevation": 1639.2,
-                "forecast.plume.headline.valid_time[0]": "2026-11-25T04:00:00Z",
+                "forecast.plume.headline.temperature[0]": 1.9,
                 "forecast.plume.bands.cumulative_snowfall.p90[0]": 13.41,
             }
         },
