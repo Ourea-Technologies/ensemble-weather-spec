@@ -1,6 +1,6 @@
 {
   "name": "request/members-plume",
-  "description": "members takes true, false or \"plume\"; \"plume\" is sent as members=plume, and the plume view comes back in forecast.plume (columns, not hourly rows).",
+  "description": "members takes true, false or \"plume\"; \"plume\" is sent as members=plume, and the plume view comes back in forecast.plume (columns, not hourly rows). members_view still names the member variables the tier carries (full for Pro).",
   "client": {},
   "call": {
     "operation": "getLocationForecast",
@@ -27,7 +27,7 @@
   ],
   "expect": {
     "result": {
-      "members_view": "plume",
+      "members_view": "full",
       "location.elevation": 1639.2,
       "forecast.plume.headline.valid_time[0]": "2026-11-25T04:00:00Z",
       "forecast.plume.bands.cumulative_snowfall.p90[0]": 13.41

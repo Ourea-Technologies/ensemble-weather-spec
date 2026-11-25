@@ -1042,14 +1042,15 @@ CASES: list[dict] = [
     # --- routes and parameters added after 3ba3f539 (BEHAVIOR.md 3) ---
     {
         "name": "request/members-plume",
-        "description": "members takes true, false or \"plume\"; \"plume\" is sent as members=plume, and the plume view comes back in forecast.plume (columns, not hourly rows).",
+        "description": "members takes true, false or \"plume\"; \"plume\" is sent as members=plume, and the plume view comes back in forecast.plume (columns, not hourly rows). members_view still names the member variables the tier carries (full for Pro).",
         "client": {},
         "call": fc({"members": "plume", "max_hours": 12}),
         "expect_request": {"method": "GET", "path": FC_PATH, "query_string": "max_hours=12&members=plume"},
         "responses": [ok("forecast-plume.json")],
         "expect": {
             "result": {
-                "members_view": "plume",
+                # The member variables a Pro key's plume carries: the full set.
+                "members_view": FORECAST_PLUME["members_view"],
                 "location.elevation": 1639.2,
                 "forecast.plume.headline.valid_time[0]": "2026-11-25T04:00:00Z",
                 "forecast.plume.bands.cumulative_snowfall.p90[0]": 13.41,
