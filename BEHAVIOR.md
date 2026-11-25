@@ -71,7 +71,7 @@ One SDK method (or idiomatic equivalent) per OpenAPI operation, except
 | `explore` | `GET /api/v1/explore` | places ranked by a metric; `metric` required; cursor paging |
 | `getComposition` | `GET /api/v1/composition` | the served models and members; open route |
 | `getLocationSeason` | `.../season` | observed season-to-date precipitation and snowfall |
-| `getLocationSnowTrend` | `.../snow-trend` | each recent run's daily snowfall; needs a key |
+| `getLocationSnowTrend` | `.../snow-trend` | each recent run's daily snowfall; Plus or Pro (`403 PLUS_REQUIRED` otherwise) |
 | `getLocationSnowpack` / `getLocationSnowpackPlume` | `.../snowpack`, `.../snowpack/plume` | beta: the body carries `beta: true` |
 | `getAlertOutlines` | `GET /api/v1/alerts/outlines` | GeoJSON `FeatureCollection` (`application/geo+json`) |
 | `getAvalancheZones` | `GET /api/v1/avalanche/zones` | GeoJSON `FeatureCollection` (`application/geo+json`) |
