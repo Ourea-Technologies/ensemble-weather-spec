@@ -29,6 +29,22 @@ case (Harrison, 2026-10-30; no aliases): `getPointForecast` →
 .NET `GetPointForecastAsync`, R `ew_get_point_forecast()`, and likewise for
 the other three).
 
+The operations added to the contract after its first SDK release take these
+names, in each language's case and its own prefix convention (a language
+whose location methods drop `get`, as Python's `forecast()` and
+`current()` do, drops it here too; R prefixes `ew_`):
+
+| operationId | Name | Python | R |
+|---|---|---|---|
+| `explore` | `explore` (page) and its lazy iterator | `explore()`, `iter_explore()` | `ew_explore_page()`, `ew_explore()` |
+| `getComposition` | `getComposition` | `composition()` | `ew_composition()` |
+| `getLocationSeason` | `getSeason` | `season()` | `ew_season()` |
+| `getLocationSnowTrend` | `getSnowTrend` | `snow_trend()` | `ew_snow_trend()` |
+| `getLocationSnowpack` | `getSnowpack` | `snowpack()` | `ew_snowpack()` |
+| `getLocationSnowpackPlume` | `getSnowpackPlume` | `snowpack_plume()` | `ew_snowpack_plume()` |
+| `getAlertOutlines` | `getAlertOutlines` | `alert_outlines()` | `ew_alert_outlines()` |
+| `getAvalancheZones` | `getAvalancheZones` | `avalanche_zones()` | `ew_avalanche_zones()` |
+
 The registry description of every package contains **"Ourea"** and its keywords
 include `ourea`, `weather`, `forecast`, `ensemble` and `probabilistic`, so brand
 searches find it.
